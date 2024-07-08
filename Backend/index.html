@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel Booking Chatbot</title>
+</head>
+<body>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            const response = await fetch('http://localhost:3000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: '1', message: userInput }),
+            });
+            const data = await response.json();
+            document.getElementById('chatbox').innerHTML += `<p>User: ${userInput}</p><p>Bot: ${data.message}</p>`;
+            document.getElementById('userInput').value = '';
+        }
+    </script>
+</body>
+</html>
